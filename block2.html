@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"></head>
-<body style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; margin:0;">
+<body style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; margin:0; background-color:#f4f3ee; padding-bottom:20vh;">
   <p style="font-size:32px; font-family:'Georgia', serif; color:#333; text-align:center; margin-bottom:40px;">
     The page you're trying to access has been blocked.
   </p>
@@ -9,9 +9,32 @@
     <p style="font-size:26px; font-family:'Georgia', serif; color:#8B0000; font-style:italic; line-height:1.8; margin:0;">
       "No man is free who is not master of himself."
     </p>
-    <footer style="margin-top:16px; font-size:16px; font-family:'Georgia', serif; color:#555;text-align:right;">
+    <footer style="margin-top:16px; font-size:16px; font-family:'Georgia', serif; color:#555; text-align:right;">
       — Epictetus
     </footer>
   </blockquote>
+  <p id="countdown" style="margin-top:48px; font-size:20px; font-family:'Georgia', serif; color:#888;">
+    Please wait <span id="seconds">10</span> seconds...
+  </p>
+  <a id="proceed" href="#" style="display:none; margin-top:48px; font-size:20px; font-family:'Georgia', serif; color:#4a7a5b; text-decoration:none;">
+    ▶ Proceed to page
+  </a>
+  <script>
+    var seconds = 10;
+    var url = location.search.replace(/^\?\d+&/, '');
+    var timer = setInterval(function() {
+      seconds--;
+      document.getElementById('seconds').textContent = seconds;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        document.getElementById('countdown').style.display = 'none';
+        if (url) {
+          var link = document.getElementById('proceed');
+          link.href = url;
+          link.style.display = 'block';
+        }
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
