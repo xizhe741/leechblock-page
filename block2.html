@@ -20,21 +20,7 @@
     ▶ Proceed to page
   </a>
   <script>
-    var seconds = 10;
-    var url = location.search.replace(/^\?\d+&/, '');
-    var timer = setInterval(function() {
-      seconds--;
-      document.getElementById('seconds').textContent = seconds;
-      if (seconds <= 0) {
-        clearInterval(timer);
-        document.getElementById('countdown').style.display = 'none';
-        if (url) {
-          var link = document.getElementById('proceed');
-          link.href = url;
-          link.style.display = 'block';
-        }
-      }
-    }, 1000);
+    document.getElementById('countdown').textContent = location.href;
   </script>
 </body>
 </html>
