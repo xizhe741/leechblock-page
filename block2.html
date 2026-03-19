@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"></head>
-<body style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; margin:0; background-color:#f4f3ee; padding-bottom:20vh;">
+<body style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; margin:0; background-color:#f4f3ee; padding-bottom:30vh;">
   <p style="font-size:32px; font-family:'Georgia', serif; color:#333; text-align:center; margin-bottom:40px;">
     The page you're trying to access has been blocked.
   </p>
-  <blockquote style="max-width:600px; text-align:center; border-left:none; margin:0;">
-    <p style="font-size:26px; font-family:'Georgia', serif; color:#8B0000; font-style:italic; line-height:1.8; margin:0;">
-      "No man is free who is not master of himself."
-    </p>
-    <footer style="margin-top:16px; font-size:16px; font-family:'Georgia', serif; color:#555; text-align:right;">
-      — Epictetus
-    </footer>
+  <blockquote style="max-width:80vw; text-align:center; border-left:none; margin:0;">
+    <p id="quote" style="font-size:26px; font-family:'Georgia', serif; color:#8B0000; font-style:italic; line-height:1.8; margin:0;"></p>
+    <footer id="author" style="margin-top:16px; font-size:16px; font-family:'Georgia', serif; color:#555; text-align:right;"></footer>
   </blockquote>
   <p id="countdown" style="margin-top:48px; font-size:20px; font-family:'Georgia', serif; color:#888;">
     Please wait <span id="seconds">10</span> seconds...
@@ -20,7 +16,35 @@
     ▶ Proceed to page
   </a>
   <script>
-    document.getElementById('countdown').textContent = location.href;
+    var quotes = [
+      ['"No man is free who is not master of himself."', 'Epictetus'],
+      ['"He that is good for making excuses is seldom good for anything else."', 'Benjamin Franklin'],
+      ['"It is not that we have a short time to live, but that we waste a great deal of it."', 'Seneca'],
+      ['"The unexamined life is not worth living."', 'Socrates'],
+      ['"Ever tried. Ever failed. No matter. Try again. Fail again. Fail better."', 'Samuel Beckett'],
+      ['"Man is condemned to be free; because once thrown into the world, he is responsible for everything he does."', 'Jean-Paul Sartre'],
+      ['"Between stimulus and response there is a space. In that space is our freedom and our power to choose our response."', 'Viktor Frankl']
+    ];
+    var pick = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('quote').textContent = pick[0];
+    document.getElementById('author').textContent = '\u2014 ' + pick[1];
+
+    var seconds = 10;
+    var params = new URLSearchParams(location.search);
+    var url = params.get('url') || '';
+    var timer = setInterval(function() {
+      seconds--;
+      document.getElementById('seconds').textContent = seconds;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        document.getElementById('countdown').style.display = 'none';
+        if (url) {
+          var link = document.getElementById('proceed');
+          link.href = url;
+          link.style.display = 'block';
+        }
+      }
+    }, 1000);
   </script>
 </body>
 </html>
